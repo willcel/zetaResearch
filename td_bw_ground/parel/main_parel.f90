@@ -59,7 +59,7 @@
 
     real *8 rerror,rerror_pre,lam,epsi,eps
 
-    real *8 sigma1,sigma2,sigma3,sigma4  ! ´óµØ »ìÄıÍÁ ¿ÕÆø Ë®
+    real *8 sigma1,sigma2,sigma3,sigma4  ! ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ë®
 
 
     real *8,allocatable::hz1_iter(:),hz1obs(:)      ! dBz/dt HCP
@@ -91,13 +91,13 @@
 
     snr = 40.0
 
-    ntc = 28           ! Ê±¼äµÀ
+    ntc = 28           ! Ê±ï¿½ï¿½ï¿½
     nolayer = 5
 
     npara = 2*nolayer-1  ! 9
 
 
-    ns = 5             ! ²âµã¸öÊı
+    ns = 5             ! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     epsi=1.d-30
     tot_para = npara*ns   ! 450
     tot_ntc = ntc*ns      ! 140
@@ -106,22 +106,22 @@
 
     eps = 1.d-10
 
-    !   size2 = tot_ntc                ! ÎŞÔ¼Êø
-    size2 = tot_ntc+size1        ! ºáÏòÔ¼Êø
-    !  size2 = tot_ntc+size1+size0  ! ºáÏòºÍ×İÏòÔ¼Êø
+    !   size2 = tot_ntc                ! ï¿½ï¿½Ô¼ï¿½ï¿½
+    size2 = tot_ntc+size1        ! ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½
+    !  size2 = tot_ntc+size1+size0  ! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½
 
     ka=max(size2,tot_para)+1
 
 
-    sigma1 = 0.01            ! 0 ´óµØ
-    sigma2 = 133            ! 3 »ìÄıÍÁ
-    sigma3 = 1d-05           ! 2 ¿ÕÆø
+    sigma1 = 0.01            ! 0 ï¿½ï¿½ï¿½
+    sigma2 = 133            ! 3 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    sigma3 = 1d-05           ! 2 ï¿½ï¿½ï¿½ï¿½
     sigma4 = 5d-02           ! 1 Ë®
 
 
 
 
-    ! ½ÓÊÕÏßÈ¦µÄ°ë¾¶Ê±0.4m
+    ! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¦ï¿½Ä°ë¾¶Ê±0.4m
     signal_limit = 1.0d-06/500/pi/0.2/0.2/1600
 
 
@@ -160,15 +160,15 @@
     Open (18, File='log.dat', Status='unknown')
     Open (19, File='err.dat', Status='unknown')
 
-    ! È¨ÖØ
+    ! È¨ï¿½ï¿½
     Wp = 0.d0
     do i=1,size1
         Wp(i,i)=0.5
     end do
 
 
-    ! =================== Ë®Æ½·ÅÖÃ =========================
-    do j=1,nolayer     !¼ÆËã²ÎÊı¾ØÕó
+    ! =================== Ë®Æ½ï¿½ï¿½ï¿½ï¿½ =========================
+    do j=1,nolayer     !ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         do i=1,ns
             if(j .eq. 2 .or. j .eq. 4)then
                 if(i .ge. 2 .and. i .le. 4)then  ! 4,5,6
@@ -198,26 +198,26 @@
     write(17,30)((label(I,J),J=1,nolayer),I=1,ns)
 
     !********************* true value of the parameter *****************
-    do i=1,ns  ! ²âµã ´Ó0m³ö¿ªÊ¼
+    do i=1,ns  ! ï¿½ï¿½ï¿½ ï¿½ï¿½0mï¿½ï¿½ï¿½ï¿½Ê¼
         do j=1,nolayer
             rho_true(j)=para_mat(i,j)
         end do
 
 
         hh_true(1) = 15
-        hh_true(2) = 1 ! ¸Ö½î»ìÄıÍÁµÄ±Úºñ
+        hh_true(2) = 1 ! ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä±Úºï¿½
         hh_true(3) = 3
         hh_true(4) = hh_true(2)
 
         call forwardprocess(rho_true, hh_true, hz1obs, hz2obs, nolayer, ntc, time, 1) ! observe value
 
-        ! Ìí¼ÓÔëÉù
+        ! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         do j=1,ntc
             sigma = hz1obs(j)/(10**(snr/20))       ! sigma
             hz1obs(j)=hz1obs(j)+normal(0.d0,1.d0)*sigma
         end do
         !
-        !        ! ¿¼ÂÇ·Ö±æÂÊ
+        !        ! ï¿½ï¿½ï¿½Ç·Ö±ï¿½ï¿½ï¿½
         !        do j=1,ntc
         !            if(abs(hz1obs(j)) .lt. signal_limit)then
         !                Vobs(j+(i-1)*ntc,1) = signal_limit*1d0
@@ -238,7 +238,7 @@
     ! print*,time
 
     !************************** initialize ***************************
-    !³õÊ¼²ÎÊıÑ¡Ôñµç×èÂÊÏàÍ¬µÄ¾ùÔÈ°ë¿Õ¼ä
+    !ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½Ä¾ï¿½ï¿½È°ï¿½Õ¼ï¿½
 
     rho_iter = 30
     hh_iter = 5
@@ -256,8 +256,8 @@
     call MPI_COMM_RANK(MPI_COMM_WORLD, rank, ierr)
 
 101 Continue
-    ! µ¥Î»¾ØÕó
-    !************************ ¸üĞÂ×èÄáÒò×Ó ********************************
+    ! ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½
+    !************************ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ********************************
     EYE = 0.d0
     do i=1,tot_para
         EYE(i,i)=lam
@@ -286,7 +286,7 @@
     ! print*,"iteration = ",counter
     ! print*,"lambda = ",lam
 
-    !*************************** ¼ÆËãÕıÑİ½á¹û *******************************
+    !*************************** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ½ï¿½ï¿½ *******************************
     ! Write(18,*)'calculate dB/dt in time domain ...'
     do k=1,ns
         if(counter .eq. 1)then
@@ -316,7 +316,7 @@
 
         call forwardprocess(rho_iter,hh_iter,hz1_iter,hz2_iter,nolayer,ntc,time,1)
 
-        ! µ±Ç°Ê±¿ÌµÄ²ÎÊı£ºµçµ¼ÂÊ
+        ! ï¿½ï¿½Ç°Ê±ï¿½ÌµÄ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½çµ¼ï¿½ï¿½
         do i=1,npara
             if(i .le. nolayer)then
                 m_pre(i+(k-1)*npara,1) = dlog(rho_iter(i))
@@ -326,18 +326,18 @@
         end do
 
 
-        ! ¼ÆËãµ±Ç°²âµãµÄÎó²î
+        ! ï¿½ï¿½ï¿½ãµ±Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         do i=1,ntc
             deltadobs(i+(k-1)*ntc,1) = Vobs(i+(k-1)*ntc,1)-hz1_iter(i)*1.d0
         end do
 
-        ! ¼ÆËãÑÅ¿É±È¾ØÕó
+        ! ï¿½ï¿½ï¿½ï¿½ï¿½Å¿É±È¾ï¿½ï¿½ï¿½
         call SYSTEM_CLOCK(iTimes2)
         Write(18,*)'calculate Jacobi matrix ...'
-        call cal_jacobi(rank, nproc_current, 3,2 , rho_iter, hh_iter, jacobi1, nolayer, ntc)
+        call cal_jacobi(rank, nproc_current, 1,20 , rho_iter, hh_iter, jacobi1, nolayer, ntc)
         call SYSTEM_CLOCK(iTimes3)
 
-        ! ×ÜµÄÑÅ¿É±È¾ØÕó
+        ! ï¿½Üµï¿½ï¿½Å¿É±È¾ï¿½ï¿½ï¿½
 
         do i=1,ntc
             do j=1,npara
@@ -384,18 +384,18 @@
 
     ! Write(18,*)'done!'
 
-    ! Çó½â·½³Ì×é A*delta_m=b0µÃµ½²ÎÊıµÄ¸üĞÂÁ¿
+    ! ï¿½ï¿½â·½ï¿½ï¿½ï¿½ï¿½ A*delta_m=b0ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    call bmuav(Atemp,size2,tot_para,u,v,l,eps,ka,s,e,work)   !    ÆæÒìÖµ·Ö½â·¨
-    ! Write(18,*)'ÆæÒìÖµ·Ö½â l = ',l
+    call bmuav(Atemp,size2,tot_para,u,v,l,eps,ka,s,e,work)   !    ï¿½ï¿½ï¿½ï¿½Öµï¿½Ö½â·¨
+    ! Write(18,*)'ï¿½ï¿½ï¿½ï¿½Öµï¿½Ö½ï¿½ l = ',l
 
     Btemp = matmul(transpose(Atemp),Atemp)+EYE
 
-    !****************** Äæ¾ØÕóÇó½âÏßĞÔ·½³Ì *****************************
+    !****************** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ *****************************
     call get_invMatrix(Btemp,tot_para,invBtemp)
 
 
-    ! lambda Ì«Ğ¡µÄÊ±ºò»áÊ¹µÃÇóÄæ¾ØÕó³ö´í
+    ! lambda Ì«Ğ¡ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     deltam = matmul(matmul(matmul(matmul(transpose(v),invBtemp),&
         transpose(Atemp)),transpose(u)),b0)
 
@@ -422,28 +422,28 @@
     if(rank==0)then
         write(*,*) 'Wall Clock TIME T3-T2:', real(iTimes3-iTimes2)/real(rate)!80/1000!
     end if
-    If(rerror>epsi .and. counter<5) Goto 101
+    If(rerror>epsi .and. counter<88) Goto 101
     call MPI_Finalize(ierr)
     
 10  Format(28E14.6)
 
-20  Format(9E14.6)   ! Ã¿¸ö²âµãµÄ²ÎÊı¸öÊı 3*nolayers-1
+20  Format(9E14.6)   ! Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 3*nolayers-1
 
-30  format(5E14.6)   ! ²ãÊı
+30  format(5E14.6)   ! ï¿½ï¿½ï¿½ï¿½
 
-100 Format(E12.6)    ! Em.n±íÊ¾¸Ã¸¡µãÊı°´µ¥¾«¶ÈÊä³ö£¬×Ü¹²mÎ»£¬Ğ¡ÊıµãºónÎ»
+100 Format(E12.6)    ! Em.nï¿½ï¿½Ê¾ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½mÎ»ï¿½ï¿½Ğ¡ï¿½ï¿½ï¿½ï¿½ï¿½nÎ»
     end program
 
 
-    !!!!!!!!!!!!!!!!!!!!!----ÆæÒìÖµ·Ö½â¡¢¹ãÒåÄæµÄ×Óº¯Êı----!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    !!!!!!!!!!!!!!!!!!!!!----ï¿½ï¿½ï¿½ï¿½Öµï¿½Ö½â¡¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óºï¿½ï¿½ï¿½----!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     !																				  !
     !																				  !
-    !   ×Óº¯ÊıÒıÓÃ×Ô¡¶Fortran³£ÓÃËã·¨³ÌĞò¼¯¡·£¨µÚ¶ş°æ£©ĞìÊ¿Á¼±àÖø£¬Çå»ª´óÑ§³ö°æÉç     !
+    !   ï¿½Óºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¡ï¿½Fortranï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½ï¿½ò¼¯¡ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½æ£©ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å»ªï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½     !
     !																				  !
     !																				  !
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    !!                          subroutine program 3 ÆæÒìÖµ·Ö½â
-    !!                           Householder±ä»»¡¢QRËã·¨
+    !!                          subroutine program 3 ï¿½ï¿½ï¿½ï¿½Öµï¿½Ö½ï¿½
+    !!                           Householderï¿½ä»»ï¿½ï¿½QRï¿½ã·¨
     !// ForQuill v1.01 Beta www.fcode.cn
     Subroutine bmuav(a, m, n, u, v, l, eps, ka, s, e, work)
     Dimension a(m, n), u(m, m), v(n, n), s(ka), e(ka), work(ka)
@@ -793,7 +793,7 @@
     End Subroutine bmuav
 
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    !!        subroutine program 4 subroutine program for ÆæÒìÖµ·Ö½â
+    !!        subroutine program 4 subroutine program for ï¿½ï¿½ï¿½ï¿½Öµï¿½Ö½ï¿½
     Subroutine sss(f, g, cs, sn)
     Real *8 f, g, cs, sn, d, r
     If ((abs(f)+abs(g))==0.0) Then
@@ -844,7 +844,7 @@
     real*8  :: A(n,n), invA(n,n), E(n,n)
 
     E = 0.d0
-    !ÉèÖÃEÎªµ¥Î»¾ØÕó
+    !ï¿½ï¿½ï¿½ï¿½EÎªï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½
     do i = 1, n
         E(i,i) = 1.d0
     end do
@@ -860,7 +860,7 @@
     real*8  :: A(n,n), B(n,M), X(n,M)
 
     real*8  :: Aup(n,n), elmax, temp
-    !AbÎªÔö¹ã¾ØÕó [AB]
+    !AbÎªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ [AB]
     real*8  :: AB(n,n+M), vtemp1(n+M), vtemp2(n+M), vtmp(n), xtmp(n)
 
     AB(1:n,1:n) = A
@@ -868,14 +868,14 @@
     AB(:,n+1:n+M) = B
 
     !##########################################################
-    !  Õâ¶ÎÊÇÁĞÖ÷ÔªÏûÈ¥·¨µÄºËĞÄ²¿·Ö
+    !  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½È¥ï¿½ï¿½ï¿½Äºï¿½ï¿½Ä²ï¿½ï¿½ï¿½
     do k = 1, n-1
 
         elmax  = abs(Ab(k,k))
         id_max = k
 
-        !Õâ¶ÎÎª²éÕÒÖ÷ÔªËØ
-        !Õâ¶Î³ÌĞòµÄÖ÷ÒªÄ¿µÄ²»ÊÇÎªÁË¸³Öµ×î´óÔªËØ¸øelmax£¬¶øÊÇÎªÁËÕÒ³ö×î´óÔªËØ¶ÔÓ¦µÄ±êºÅ
+        !ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½
+        !ï¿½ï¿½Î³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÄ¿ï¿½Ä²ï¿½ï¿½ï¿½Îªï¿½Ë¸ï¿½Öµï¿½ï¿½ï¿½Ôªï¿½Ø¸ï¿½elmaxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½Ôªï¿½Ø¶ï¿½Ó¦ï¿½Ä±ï¿½ï¿½
 
 
         do i=k+1,n
@@ -886,8 +886,8 @@
             end if
         end do
 
-        !ÖÁ´Ë£¬ÒÑ¾­Íê³É²éÕÒ×î´óÔªËØ£¬²éÕÒÍê³ÉÒÔºóÓë µÚkĞĞ½»»»
-        !½»»»Á½ĞĞÔªËØ£¬ÆäËû²»±ä
+        !ï¿½ï¿½ï¿½Ë£ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½É²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½Ø£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôºï¿½ï¿½ï¿½ ï¿½ï¿½kï¿½Ğ½ï¿½ï¿½ï¿½
+        !ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½Ø£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         vtemp1 = Ab(k,:)
         vtemp2 = Ab(id_max,:)
 
@@ -895,7 +895,7 @@
         Ab(k,:)      = vtemp2
         Ab(id_max,:) = vtemp1
         !
-        !ÒÔÉÏÒ»´ó¶ÎÊÇÎª½»»»Á½ĞĞÔªËØ£¬½»»»Íê³ÉÒÔºó¼´°´ÕÕÏûÔª·¨½øĞĞ
+        !ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½Ø£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôºó¼´°ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         !#########################################################
 
         do i = k+1, n
@@ -908,7 +908,7 @@
 
     end do
     !-----------------------------
-    ! ¾­¹ıÉÏÒ»²½£¬AbÒÑ¾­»¯ÎªÈçÏÂĞÎÊ½µÄ¾ØÕó
+    ! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Abï¿½Ñ¾ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½Ä¾ï¿½ï¿½ï¿½
     !            | *  *  *  *  #  #|
     !     [A b]= | 0  *  *  *  #  #|
     !            | 0  0  *  *  #  #|
@@ -917,10 +917,10 @@
     Aup(:,:) = AB(1:n,1:n)
 
     do i=1,m
-        !µ÷ÓÃÓÃÉÏÈı½Ç·½³Ì×éµÄ»Ø´ø·½·¨
+        !ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½Ä»Ø´ï¿½ï¿½ï¿½ï¿½ï¿½
         vtmp = AB(:,n+i)
         call uptri(Aup,vtmp,xtmp,n)
-        !°Ñ¼ÆËã½á¹û¸³Öµ¸øX
+        !ï¿½Ñ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½X
         X(:,i) = xtmp
     end do
 
@@ -933,7 +933,7 @@
     real*8  :: A(n,n), b(n), x(n)
 
     x(n) = b(n)/A(n,n)
-    !»Ø´ø²¿·Ö
+    !ï¿½Ø´ï¿½ï¿½ï¿½ï¿½ï¿½
     do i = n-1, 1, -1
 
         x(i) = b(i)
@@ -952,7 +952,7 @@
     use mpi
     integer:: i,j,no,ntc0
     Real *8 m1(nlayer), m2(nlayer), delta,jac_perRank(ntc0)
-    real *8 jac(ntc0,2*nlayer-1) ! ×¢ÒâÊÇ°üÀ¨´Åµ¼ÂÊµÄ×Ü²ÎÊıÊıÄ¿
+    real *8 jac(ntc0,2*nlayer-1) ! ×¢ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Åµï¿½ï¿½Êµï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿
     real *8,allocatable::time1(:)
 
     integer:: ierr, rank, nproc_current
@@ -1132,11 +1132,11 @@
     rplus = dsqrt(r*r+zplus*zplus)
 
     !**************************************************************
-    ! ·¢ÉäÏßÈ¦
-    rt = 0.5          ! ÏßÈ¦µÄ°ë¾¶
-    nturn = 3.         ! ÏßÈ¦µÄÔÑÊı
+    ! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¦
+    rt = 0.5          ! ï¿½ï¿½È¦ï¿½Ä°ë¾¶
+    nturn = 3.         ! ï¿½ï¿½È¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     tm = 200
-    ti0 = tm/(4*rt*rt*nturn)  ! ÔÚ´ïµ½´Å¾ØÊ±µÄµçÁ÷
+    ti0 = tm/(4*rt*rt*nturn)  ! ï¿½Ú´ïµ½ï¿½Å¾ï¿½Ê±ï¿½Äµï¿½ï¿½ï¿½
 
 
     !**************************************************************
@@ -1148,11 +1148,11 @@
 
     do k=1,npls
         do i=(nt*(k-1)+1),(nt*k)
-            if(k==1)then                         ! µÚÒ»¸öÂö³å
+            if(k==1)then                         ! ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 tlog(i)=dlog10(t_st)+i*delta_t
                 t(i)=10**tlog(i)
             else
-                t(i)=t(i-nt)+t_ed            ! ÕâÀï¼ÓµÄt_edÊÇ¼ÙÉèt_ed´ËÊ±ÊÇÖÜÆÚ
+                t(i)=t(i-nt)+t_ed            ! ï¿½ï¿½ï¿½ï¿½Óµï¿½t_edï¿½Ç¼ï¿½ï¿½ï¿½t_edï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             end if
         end do
     end do
@@ -1163,7 +1163,7 @@
     ic = 2
 
 
-    If (ic==2) Then   ! µ¥¼«ĞÔ·½²¨
+    If (ic==2) Then   ! ï¿½ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½
         tt1 = 2e-3
         tt2 = t_ed-tt1
     End If
@@ -1191,12 +1191,12 @@
 
             ik = 0
             Do ip = 1, npls
-                If (t(i)>(ip-1)*(tt1+tt2) .And. t(i)<ip*(tt1+tt2)) kpls = ip   ! ÅĞ¶Ï³éµÀÊ±¼äÎ»ÓÚÄÄÒ»¸öÂö³å¶Î
+                If (t(i)>(ip-1)*(tt1+tt2) .And. t(i)<ip*(tt1+tt2)) kpls = ip   ! ï¿½Ğ¶Ï³ï¿½ï¿½Ê±ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             End Do
 
             Do ip = 1,kpls-1
 
-                Call frt(rho, hh, t(i)-(ip-1)*(tt1+tt2), s2, 2, zplus, zminus, 0, ik, nlayer)  ! Âö³åÏìÓ¦
+                Call frt(rho, hh, t(i)-(ip-1)*(tt1+tt2), s2, 2, zplus, zminus, 0, ik, nlayer)  ! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦
 
                 ss2 = ss2 + s2      ! positive delta
 
@@ -1233,7 +1233,7 @@
     End If
 
 
-    ! ³éµÀµş¼Ó
+    ! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     hz1_pls = 0.d0
 
     do i=1,nt
@@ -1545,7 +1545,7 @@
     ! output: BE
     ! input: f - frequency
     ! input: u - k
-    ! input: mu - ´Åµ¼ÂÊ
+    ! input: mu - ï¿½Åµï¿½ï¿½ï¿½
     ! nlayer -  no. of layers
     Complex *16 Function b(rho4, hh4, f, u, nlayer)
     Complex *16 alpha, s1, s2
