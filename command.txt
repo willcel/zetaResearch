@@ -1,0 +1,14 @@
+cd /mnt/d/0628五棵松相关/zetaResearch/exp_nanjing11_parel
+
+dos2unix *
+
+mpif90 -o sing_parel expmain4.f90 && mpirun -n 6 sing_parel 
+
+mpif90 -o hx_serial main_hengxiang_serial.f90 && mpirun -n 1 hx_serial
+
+cd /mnt/d/0628五棵松相关/zetaResearch/td_bw_ground
+
+
+cd /home/willcel/Dev/zetaResearch/td_bw_ground && mpif90 -o td_serial main.f90 && mpirun -n 1 td_serial
+
+cd /home/willcel/Dev/zetaResearch/td_bw_ground/parel && mpif90 -o td_parel main_parel.f90 && mpirun -n 6 td_parel

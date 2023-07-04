@@ -1,0 +1,2 @@
+ Wall Clock TIME T4-T1:   57.8059998    
+ Wall Clock TIME T3-T2:   18.9689999    
