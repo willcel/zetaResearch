@@ -97,7 +97,7 @@
     npara = 2*nolayer-1  ! 9
 
 
-    ns = 2             ! ������
+    ns = 5             ! ������
     epsi=1.d-30
     tot_para = npara*ns   ! 450
     tot_ntc = ntc*ns      ! 140
