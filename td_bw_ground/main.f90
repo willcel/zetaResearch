@@ -97,7 +97,7 @@
     npara = 2*nolayer-1  ! 9
 
 
-    ns = 5             ! 测点个数
+    ns = 2             ! 测点个数
     epsi=1.d-30
     tot_para = npara*ns   ! 450
     tot_ntc = ntc*ns      ! 140
@@ -172,8 +172,8 @@
         do i=1,ns
             if(j .eq. 2 .or. j .eq. 4)then
                 if(i .ge. 2 .and. i .le. 4)then  ! 4,5,6
-                    para_mat(i,j)=1.0/sigma2
-                    label(i,j)=dlog10(1.0/sigma2)
+                    para_mat(i,j)=1.0/sigma1
+                    label(i,j)=dlog10(1.0/sigma1)
                 else
                     para_mat(i,j)=1.0/sigma1
                     label(i,j)=dlog10(1.0/sigma1)
@@ -181,8 +181,8 @@
             else
                 if(j .eq. 3)then
                     if(i .ge. 2 .and. i .le. 4)then  ! 4,5,6
-                        para_mat(i,j)=1.0/sigma3
-                        label(i,j)=dlog10(1.0/sigma3)
+                        para_mat(i,j)=1.0/sigma2
+                        label(i,j)=dlog10(1.0/sigma2)
                     else
                         para_mat(i,j)=1.0/sigma1
                         label(i,j)=dlog10(1.0/sigma1)
